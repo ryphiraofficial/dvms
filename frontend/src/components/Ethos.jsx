@@ -296,6 +296,16 @@ body {
 }
 
 @media (max-width: 900px) {
+  .ethos-section-wrapper {
+    padding: 40px 0 !important;
+  }
+  .ethos-scroll-block {
+    min-height: auto !important;
+    padding: 24px 0 !important;
+  }
+  .ethos-scroll-block:last-child {
+    padding-bottom: 24px !important;
+  }
   .ethos-sticky-right {
     position: relative;
     top: 0;

@@ -91,42 +91,59 @@ function App() {
       .fromTo('.hero-description', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.8')
       .fromTo('.hero-actions', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
 
-    // 2. Hero Section and Video Zoom Out on Scroll
-    gsap.to('.hero-section', {
-      scale: 0.96,
-      transformOrigin: 'top center',
-      borderRadius: '0 0 24px 24px',
-      scrollTrigger: {
-        trigger: '.hero-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-      }
+    // 2. Hero ScrollTriggers (Desktop vs Mobile MatchMedia)
+    let mm = gsap.matchMedia();
+
+    // Desktop/Laptop View
+    mm.add("(min-width: 769px)", () => {
+      gsap.to('.hero-section', {
+        scale: 0.96,
+        transformOrigin: 'top center',
+        borderRadius: '0 0 24px 24px',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      })
+
+      gsap.to('.hero-video-bg video', {
+        yPercent: 20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      })
+
+      gsap.to('.hero-content', {
+        yPercent: -20,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      })
     })
 
-    // Video layer translation (vertical parallax)
-    gsap.to('.hero-video-bg video', {
-      yPercent: 20,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-      }
-    })
-
-    // Foreground content translation & fade (parallax content)
-    gsap.to('.hero-content', {
-      yPercent: -20,
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-      }
+    // Mobile View: Simplified Fade-out scroll trigger
+    mm.add("(max-width: 768px)", () => {
+      gsap.to('.hero-content', {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      })
     })
 
     // 3. Services Row Cards Entrance Animation (Alternating Sides with Stagger Delay)

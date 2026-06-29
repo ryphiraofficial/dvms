@@ -21,12 +21,12 @@ const InstagramIcon = ({ size = 16, ...props }) => (
 
 export default function Contact({ contactRef }) {
   return (
-    <section id="contact" ref={contactRef} style={{ padding: '120px 0', backgroundColor: 'var(--bg-offset)', borderBottom: 'none' }}>
+    <section id="contact" ref={contactRef} className="contact-section" style={{ backgroundColor: 'var(--bg-offset)', borderBottom: 'none' }}>
       <div className="container">
-        <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '80px', alignItems: 'center' }}>
+        <div className="contact-grid">
           
           {/* Left Column: Info & Tagline */}
-          <div className="contact-info" style={{ minHeight: 'auto' }}>
+          <div className="contact-info">
             <div>
               <span className="section-tag" style={{ color: 'var(--text-light)', letterSpacing: '0.15em', display: 'inline-block', marginBottom: '16px' }}>Uplink Channels</span>
               <h2 className="section-title" style={{ marginBottom: '24px', fontSize: 'clamp(32px, 3.5vw, 44px)' }}>
@@ -39,10 +39,10 @@ export default function Contact({ contactRef }) {
           </div>
 
           {/* Right Column: Contact details in a clean horizontal flow */}
-          <div className="contact-details" style={{ marginTop: '0', display: 'flex', flexDirection: 'row', gap: '40px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div className="contact-details">
             
             {/* Phone Detail Item */}
-            <div className="contact-detail-item" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <div className="contact-detail-item">
               <div className="contact-icon-wrapper">
                 <Phone size={16} />
               </div>

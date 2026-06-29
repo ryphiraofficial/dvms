@@ -160,6 +160,15 @@ section {
   background-color: var(--bg);
 }
 
+@media (max-width: 768px) {
+  section,
+  .text-fill-container,
+  .contact-section,
+  .divisions-section {
+    padding: 60px 0 !important;
+  }
+}
+
 .section-tag {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -221,12 +230,15 @@ section {
 }
 
 @media (max-width: 900px) {
+  .hero-section {
+    min-height: 70vh !important;
+    padding-top: 80px !important;
+  }
   .hero-section::before {
-    width: 100%;
-    background: linear-gradient(to bottom,
-        rgba(255, 255, 255, 0.98) 0%,
-        rgba(255, 255, 255, 0.88) 80%,
-        rgba(255, 255, 255, 0.6) 100%);
+    display: none !important;
+  }
+  .hero-content {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 35px rgba(255, 255, 255, 0.75)) !important;
   }
 }
 
@@ -266,7 +278,7 @@ section {
 
 @media (max-width: 768px) {
   .hero-description {
-    font-size: 16px;
+    display: none !important;
   }
 }
 
@@ -324,6 +336,27 @@ section {
 
 .btn-secondary:hover::after {
   width: 0;
+}
+
+@media (max-width: 600px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+  }
+  .btn-primary {
+    padding: 12px 24px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
+    text-align: center;
+    width: 100%;
+    max-width: 260px;
+    white-space: nowrap;
+  }
+  .btn-secondary {
+    display: none !important;
+  }
 }
 
 /* Background Grid Lines (Minimal elegance) */
@@ -459,6 +492,19 @@ section {
   background-color: #eeeeee;
   border-color: var(--text);
   transform: translateX(5px);
+}
+
+@media (max-width: 600px) {
+  .service-row-card {
+    padding: 20px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  .service-row-arrow {
+    align-self: flex-end !important;
+    margin-top: 10px !important;
+  }
 }
 
 .service-row-num {
@@ -868,6 +914,10 @@ section {
 }
 
 /* Contact / Inquiry Form */
+.contact-section {
+  padding: 80px 0;
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -886,7 +936,7 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 480px;
+  min-height: auto;
 }
 
 @media (max-width: 900px) {
@@ -898,9 +948,19 @@ section {
 
 .contact-details {
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-  margin-top: 50px;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  .contact-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
 }
 
 .contact-detail-item {
@@ -951,6 +1011,110 @@ section {
 @media (max-width: 480px) {
   .contact-form-card {
     padding: 30px 20px;
+  }
+}
+
+/* Divisions Section */
+.divisions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.division-card {
+  border: 1px solid var(--border);
+  padding: 50px;
+  background-color: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.division-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.division-card-header .division-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  border: 1px solid var(--border-light);
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.division-card-header .division-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+.division-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.division-description {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+}
+
+.division-list {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.division-list li {
+  list-style: none !important;
+  list-style-type: none !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.division-bullet {
+  width: 4px;
+  height: 4px;
+  background-color: var(--text);
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .divisions-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .division-card {
+    padding: 30px 20px;
+  }
+  .division-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  .division-title {
+    font-size: 24px;
   }
 }
 

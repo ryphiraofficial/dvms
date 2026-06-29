@@ -23,7 +23,7 @@ export default function Hero({ heroRef, setInquiryModalOpen }) {
           </h1>
           
           <p className="hero-description">
-            DVMS is a high-performance fleet intelligence platform engineered to maximize operational visibility, driver compliance safety, and telemetry accountability. Built on advanced cyber-physical security with a future academy ecosystem initiative.
+            DVMS is a high-performance fleet intelligence platform engineered to maximize operational visibility, driver compliance safety, and telemetry accountability. Built on advanced cyber-physical security protocols.
           </p>
           
           <div className="hero-actions">

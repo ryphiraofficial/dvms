@@ -6,60 +6,66 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Configurator({ configWidgetRef }) {
   useEffect(() => {
-    // Timeline Scroll Sweep Animation
-    const sweepTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.sweep-section-wrapper',
-        start: 'top top',
-        end: '+=200%',
-        pin: true,
-        scrub: true,
-        onUpdate: (self) => {
-          const p = self.progress;
-          // Map the active class triggers to correspond exactly with the card reveal times in the timeline
-          document.querySelector('.t-node-1')?.classList.toggle('active', p >= 0.1);
-          document.querySelector('.t-node-2')?.classList.toggle('active', p >= 0.35);
-          document.querySelector('.t-node-3')?.classList.toggle('active', p >= 0.6);
-          document.querySelector('.t-node-4')?.classList.toggle('active', p >= 0.85);
-        }
-      }
+    const ctx = gsap.context(() => {
+      let mm = gsap.matchMedia();
+
+      // Desktop/Laptop View: Pinned Scroll-Sweep
+      mm.add("(min-width: 769px)", () => {
+        const sweepTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: '.sweep-section-wrapper',
+            start: 'top top',
+            end: '+=200%',
+            pin: true,
+            scrub: true,
+            onUpdate: (self) => {
+              const p = self.progress;
+              document.querySelector('.t-node-1')?.classList.toggle('active', p >= 0.1);
+              document.querySelector('.t-node-2')?.classList.toggle('active', p >= 0.35);
+              document.querySelector('.t-node-3')?.classList.toggle('active', p >= 0.6);
+              document.querySelector('.t-node-4')?.classList.toggle('active', p >= 0.85);
+            }
+          }
+        });
+
+        sweepTimeline.fromTo('.sweep-line-active',
+          { scaleX: 0 },
+          { scaleX: 1, ease: 'none', duration: 1 }
+        );
+
+        sweepTimeline.fromTo('.t-card-1, .t-node-1', 
+          { opacity: 0, x: 50, scale: 0.96 }, 
+          { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
+          '0.1'
+        );
+
+        sweepTimeline.fromTo('.t-card-2, .t-node-2', 
+          { opacity: 0, x: 50, scale: 0.96 }, 
+          { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
+          '0.35'
+        );
+
+        sweepTimeline.fromTo('.t-card-3, .t-node-3', 
+          { opacity: 0, x: 50, scale: 0.96 }, 
+          { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
+          '0.6'
+        );
+
+        sweepTimeline.fromTo('.t-card-4, .t-node-4', 
+          { opacity: 0, x: 50, scale: 0.96 }, 
+          { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
+          '0.85'
+        );
+      });
+
+      // Mobile/Tablet View: Keep visible
+      mm.add("(max-width: 768px)", () => {
+        gsap.set('.sweep-card', { opacity: 1, x: 0, scale: 1 });
+      });
     });
 
-    // 1. Draw the active horizontal connecting line from left to right (scaleX: 0 to 1)
-    sweepTimeline.fromTo('.sweep-line-active',
-      { scaleX: 0 },
-      { scaleX: 1, ease: 'none', duration: 1 }
-    );
-
-    // 2. Map card reveals & connection node activations to match the horizontal progress of the line
-    sweepTimeline.fromTo('.t-card-1, .t-node-1', 
-      { opacity: 0, x: 50, scale: 0.96 }, 
-      { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
-      '0.1' // activates when line crosses ~15% progress (hits Card 1)
-    );
-
-    sweepTimeline.fromTo('.t-card-2, .t-node-2', 
-      { opacity: 0, x: 50, scale: 0.96 }, 
-      { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
-      '0.35' // activates when line crosses ~40% progress (hits Card 2)
-    );
-
-    sweepTimeline.fromTo('.t-card-3, .t-node-3', 
-      { opacity: 0, x: 50, scale: 0.96 }, 
-      { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
-      '0.6' // activates when line crosses ~65% progress (hits Card 3)
-    );
-
-    sweepTimeline.fromTo('.t-card-4, .t-node-4', 
-      { opacity: 0, x: 50, scale: 0.96 }, 
-      { opacity: 1, x: 0, scale: 1, duration: 0.15 }, 
-      '0.85' // activates when line reaches the end (~90% progress, hits Card 4)
-    );
-
-    ScrollTrigger.refresh();
-
     return () => {
-      sweepTimeline.scrollTrigger?.kill();
+      ctx.revert();
     };
   }, []);
 
@@ -356,5 +362,33 @@ const styles = `
   font-weight: 450;
   color: var(--text-muted);
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .sweep-section-wrapper {
+    height: auto !important;
+  }
+  .sweep-sticky-container {
+    height: auto !important;
+    overflow: visible !important;
+    padding: 80px 0 !important;
+  }
+  .sweep-header-container {
+    position: relative !important;
+    top: 0 !important;
+    margin-bottom: 40px !important;
+    padding: 0 24px !important;
+  }
+  .sweep-line-track-container, .sweep-nodes-wrapper {
+    display: none !important;
+  }
+  .sweep-cards-grid {
+    position: relative !important;
+    top: 0 !important;
+    transform: none !important;
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 0 24px !important;
+  }
 }
 `;
